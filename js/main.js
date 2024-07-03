@@ -343,5 +343,27 @@ function carritoVacio() {
         carritoAcciones.classList.remove("disabled");
     }
 }
+function generarMensajeWhatsApp() {
+    let mensaje = "¡Hola! Estos son los productos en mi carrito:\n\n";
+
+    productosEnCarrito.forEach((producto, index) => {
+        mensaje += `${index + 1}. ${producto.titulo} - Cantidad: ${producto.cantidad}\n`;
+        mensaje += `Precio unitario: $${producto.precio}\n`;
+        // Puedes incluir más detalles como subtotal por producto si lo deseas
+        mensaje += "\n";
+    });
+
+    // Codificar el mensaje para URL
+    mensaje = encodeURIComponent(mensaje);
+
+    // Número de teléfono de WhatsApp (reemplaza con tu número)
+    const numeroWhatsApp = "2915116875"; // Cambia por tu número de WhatsApp
+
+    // Construir la URL de WhatsApp
+    const urlWhatsApp = `https://wa.me/${numeroWhatsApp}?text=${mensaje}`;
+
+    // Redirigir a la URL de WhatsApp
+    window.location.href = urlWhatsApp;
+}
 
 carritoVacio();
