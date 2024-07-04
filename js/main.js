@@ -243,7 +243,6 @@ function actualizarBotonesAgregar() {
 };
 
 function agregarAlCarrito(e) {
-
     const productoElegido = productos.find(producto => "agregar-" + producto.id === e.currentTarget.id);
 
     if (productosEnCarrito.find(producto => producto.id === productoElegido.id)) {
@@ -256,7 +255,23 @@ function agregarAlCarrito(e) {
 
     actualizarCarritoProductos();
 
+    // Mostrar mensaje
+    const mensaje = `¡Se agregó "${productoElegido.titulo}" al carrito!`;
+    mostrarMensaje(mensaje);
 }
+
+function mostrarMensaje(mensaje) {
+    const mensajeElemento = document.createElement("div");
+    mensajeElemento.classList.add("mensaje");
+    mensajeElemento.textContent = mensaje;
+
+    document.body.appendChild(mensajeElemento);
+
+    setTimeout(() => {
+        mensajeElemento.remove();
+    }, 1000); // Elimina el mensaje después de 1 segundos
+}
+
 
 
 const carritoProductos = document.querySelector("#carrito-productos");

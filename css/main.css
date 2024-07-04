@@ -1,3 +1,4 @@
+/* Importación de la fuente de Google Fonts */
 @import url('https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;600;700;800;900&display=swap');
 
 :root {
@@ -15,7 +16,7 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Rubik', sans-serif;
+    font-family: 'Rubik', sans-serif; /* Aplicación de la fuente para todo el documento */
 }
 
 h1, h2, h3, h4, h5, h6, p, a, input, textarea {
@@ -30,19 +31,15 @@ a {
     text-decoration: none;
 }
 
-
 img {
-
     height: 350px;
-    
     width: 350px;
-    
     object-fit: cover;
-    
 }
 
 body {
     background-color: var(--clr-white);
+    font-family: 'Rubik', sans-serif; /* Asegúrate de aplicar la fuente también al cuerpo del documento */
 }
 
 .main-wrapper {
@@ -65,13 +62,15 @@ aside {
     color: var(--clr-main);
     width: 100%;
 }
+
 .logo img {
     max-width: 100%; 
     height: auto; 
     display: block; 
     margin: 0 auto;
     border-radius: 50rem;
-  }
+}
+
 .footer-parrafo {
     color: rgba(255, 255, 255, .2);
     font-size: .8rem;
@@ -99,22 +98,6 @@ aside {
     width: 100%;
     font-style: italic;
     font-size: 1.3rem;
-    font-family: cursive;
-}
-
-
- 
-
-.carrito-numero {
-    background-color: var(--clr-white);
-    color: var(--clr-letras);
-    width: 1.25rem;
-    height: 1.25rem;
-    border-radius: .25rem;
-    line-height: 1;
-    display: flex;
-    justify-content: center;
-    align-items: center;
 }
 
 .boton-categoria.active {
@@ -134,10 +117,6 @@ aside {
     color: var(--clr-fondo);
 }
 
-
-
-
-
 .boton-carrito {
     margin-top: 2rem;
 }
@@ -155,15 +134,13 @@ main {
     color: var(--clr-fondo);
     margin-bottom: 2rem;
     font-size: 2.5rem;
-    font-family:cursive;
-    font-style:italic;
+    font-family: 'Rubik', sans-serif; /* Asegúrate de aplicar la fuente al título */
+    font-style: italic;
     text-align: center;
     text-shadow: -1px -1px 0 #6d4294,  
     1px -1px 0 #6d4294,
     -1px 1px 0 #6d4294,
     1px 1px 0 #6d4294;
-
-
 }
 
 .contenedor-productos {
@@ -191,7 +168,7 @@ main {
     margin-top: -2rem;
     position:relative;
     text-align: center;
-    font-family: cursive;
+    font-family: 'Rubik', sans-serif; /* Asegúrate de aplicar la fuente al detalle del producto */
 }
 
 .producto-nombre {
@@ -209,12 +186,12 @@ main {
     border: 2px solid var(--clr-white);
     transition: background-color .2s, color .2s;
 }
+
 .producto-agregar:hover {
     background-color: var(--clr-fondo);
     color: var(--clr-white);
-
-
 }
+
 .contenedor-carrito {
     display: flex;
     flex-direction: column;
@@ -299,7 +276,18 @@ main {
     background-color: var(--clr-white);
     line-height: 1;
 }
-
+.mensaje {
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 10px 20px;
+    background-color: rgba(0, 0, 0, 0.8);
+    color: white;
+    font-size: 1.2rem;
+    border-radius: 5px;
+    z-index: 1000;
+}
 .carrito-vacio {
     color: var(--clr-letras);
     font-size: 1.5rem;
