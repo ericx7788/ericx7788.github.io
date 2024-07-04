@@ -324,8 +324,52 @@ function actualizarBotonesEliminar() {
 function eliminarDelCarrito(e) {
     const idBoton = e.currentTarget.id;
     const index = productosEnCarrito.findIndex(producto => "eliminar-" + producto.id === idBoton);
-    productosEnCarrito.splice(index, 1);
+
+    if (productosEnCarrito[index].cantidad > 1) {
+        productosEnCarrito[index].cantidad--;
+    } else {
+        productosEnCarrito.splice(index, 1);
+    }
+
     actualizarCarritoProductos();
+}
+
+// Actualiza la función actualizarCarritoProductos para mostrar la cantidad correcta y el subtotal
+function actualizarCarritoProductos() {
+    carritoProductos.innerHTML = "";
+
+    productosEnCarrito.forEach(producto => {
+        const div = document.createElement("div");
+        div.classList.add("carrito-producto");
+        div.innerHTML = `
+            <img class="carrito-producto-imagen" src="${producto.imagen}" alt="${producto.titulo}">
+            <div class="carrito-producto-nombre">
+                <small>Nombre</small>
+                <h3>${producto.titulo}</h3>
+            </div>
+            <div class="carrito-producto-cantidad">
+                <small>Cantidad</small>
+                <p>${producto.cantidad}</p>
+            </div>
+            <div class="carrito-producto-precio">
+                <small>Precio</small>
+                <p>$${producto.precio}</p>
+            </div>
+            <div class="carrito-producto-subtotal">
+                <small>Subtotal</small>
+                <p>$${producto.precio * producto.cantidad}</p>
+            </div>
+            <button class="carrito-producto-eliminar" id="eliminar-${producto.id}">
+                <i class="bi bi-trash-fill"></i>
+            </button>
+        `;
+        carritoProductos.append(div);
+    });
+
+    actualizarBotonesEliminar();
+    actualizarTotal();
+    actualizarCarritoNumero();
+    carritoVacio();
 }
 
 
