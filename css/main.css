@@ -16,7 +16,7 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Rubik', sans-serif; /* Aplicación de la fuente para todo el documento */
+    font-family: 'Rubik', sans-serif; 
 }
 
 h1, h2, h3, h4, h5, h6, p, a, input, textarea {
@@ -39,7 +39,7 @@ img {
 
 body {
     background-color: var(--clr-white);
-    font-family: 'Rubik', sans-serif; /* Asegúrate de aplicar la fuente también al cuerpo del documento */
+    font-family: 'Rubik', sans-serif; 
 }
 
 .main-wrapper {
@@ -74,9 +74,9 @@ aside {
 .footer-parrafo {
     color: rgba(255, 255, 255, .2);
     font-size: .8rem;
-    -webkit-user-select: none; /* Safari */
-    -ms-user-select: none; /* IE 10 and IE 11 */
-    user-select: none; /* Standard syntax */
+    -webkit-user-select: none; 
+    -ms-user-select: none; 
+    user-select: none; 
 }
 
 .navbar {
@@ -134,7 +134,7 @@ main {
     color: var(--clr-fondo);
     margin-bottom: 2rem;
     font-size: 2.5rem;
-    font-family: 'Rubik', sans-serif; /* Asegúrate de aplicar la fuente al título */
+    font-family: 'Rubik', sans-serif; 
     font-style: italic;
     text-align: center;
     text-shadow: -1px -1px 0 #6d4294,  
@@ -168,7 +168,7 @@ main {
     margin-top: -2rem;
     position:relative;
     text-align: center;
-    font-family: 'Rubik', sans-serif; /* Asegúrate de aplicar la fuente al detalle del producto */
+    font-family: 'Rubik', sans-serif; 
 }
 
 .producto-nombre {
