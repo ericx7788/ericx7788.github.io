@@ -424,4 +424,5 @@ function generarMensajeWhatsApp() {
     window.location.href = urlWhatsApp;
 }
 
-carritoVacio();
+carritoVacio();}
+
