@@ -255,7 +255,7 @@ function agregarAlCarrito(e) {
 
     actualizarCarritoProductos();
 
-    // Mostrar mensaje
+    
     const mensaje = `¡Se agregó "${productoElegido.titulo}" al carrito!`;
     mostrarMensaje(mensaje);
 }
@@ -269,8 +269,7 @@ function mostrarMensaje(mensaje) {
 
     setTimeout(() => {
         mensajeElemento.remove();
-    }, 1000); // Elimina el mensaje después de 1 segundos
-}
+    }, 1000); 
 
 
 
@@ -334,7 +333,7 @@ function eliminarDelCarrito(e) {
     actualizarCarritoProductos();
 }
 
-// Actualiza la función actualizarCarritoProductos para mostrar la cantidad correcta y el subtotal
+
 function actualizarCarritoProductos() {
     carritoProductos.innerHTML = "";
 
