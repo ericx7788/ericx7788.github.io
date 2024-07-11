@@ -1,5 +1,4 @@
 const productos = [
-    
     {
         id: "necessaires-01",
         titulo: "Necessaires 01",
@@ -40,9 +39,6 @@ const productos = [
         },
         precio: 6500
     },
-    
-
-    
     {
         id: "chau latas-01",
         titulo: "Chau latas 01",
@@ -83,8 +79,6 @@ const productos = [
         },
         precio: 9500
     },
-    
-    
     {
         id: "porta anteojos-01",
         titulo: "Porta anteojos 01",
@@ -95,7 +89,6 @@ const productos = [
         },
         precio: 4700
     },
-
     {
         id: "porta anteojos-02",
         titulo: "Porta anteojos 02",
@@ -135,8 +128,6 @@ const productos = [
             id: "otros"
         },
         precio: 29700
-    
-
     },
     {
         id: "porta mate de auto",
@@ -167,7 +158,6 @@ function actualizarContenedorProductos(productosElegidos) {
     contenedorProductos.innerHTML = "";
 
     productosElegidos.forEach((producto) => {
-
         const div = document.createElement("div");
         div.classList.add("producto");
 
@@ -178,9 +168,8 @@ function actualizarContenedorProductos(productosElegidos) {
                 <p class="producto-precio">$${producto.precio}</p>
                 <button class="producto-agregar" id="agregar-${producto.id}">Agregar</button>
             </div>
-        `
+        `;
         contenedorProductos.append(div);
-
     });
 
     actualizarBotonesAgregar();
@@ -194,53 +183,38 @@ const contenedorTotal = document.querySelector("#total");
 const carritoAcciones = document.querySelector("#carrito-acciones");
 
 botones.forEach(boton => {
-
     boton.addEventListener("click", () => {
-
         botones.forEach(boton => boton.classList.remove("active"));
         boton.classList.add("active");
 
         if (boton.id === "boton-todos") {
-
             actualizarContenedorProductos(productos);
             titulo.innerText = "Todos los productos";
-
             contenedorProductos.classList.remove("disabled");
             contenedorCarrito.classList.add("disabled");
-
         } else if (boton.id === "boton-carrito") {
-
             titulo.innerText = "Carrito";
             contenedorProductos.classList.add("disabled");
             contenedorCarrito.classList.remove("disabled");
-
         } else {
-
             let productoSeleccionado = productos.find(producto => "boton-" + producto.categoria.id === boton.id);
             titulo.innerText = productoSeleccionado.categoria.nombre;
-
             const productosNuevos = productos.filter(producto => "boton-" + producto.categoria.id === boton.id);
             actualizarContenedorProductos(productosNuevos);
-
             contenedorProductos.classList.remove("disabled");
             contenedorCarrito.classList.add("disabled");
-
         }
-
     });
-
-})
+});
 
 const productosEnCarrito = [];
 
 function actualizarBotonesAgregar() {
-
     const botonesAgregar = document.querySelectorAll(".producto-agregar");
     botonesAgregar.forEach(boton => {
         boton.addEventListener("click", agregarAlCarrito);
-    })
-
-};
+    });
+}
 
 function agregarAlCarrito(e) {
     const productoElegido = productos.find(producto => "agregar-" + producto.id === e.currentTarget.id);
@@ -255,7 +229,6 @@ function agregarAlCarrito(e) {
 
     actualizarCarritoProductos();
 
-    
     const mensaje = `¡Se agregó "${productoElegido.titulo}" al carrito!`;
     mostrarMensaje(mensaje);
 }
@@ -269,9 +242,8 @@ function mostrarMensaje(mensaje) {
 
     setTimeout(() => {
         mensajeElemento.remove();
-    }, 1000); 
-
-
+    }, 1000);
+}
 
 const carritoProductos = document.querySelector("#carrito-productos");
 
@@ -310,15 +282,14 @@ function actualizarCarritoProductos() {
     actualizarTotal();
     actualizarCarritoNumero();
     carritoVacio();
-
 }
 
 function actualizarBotonesEliminar() {
     const botonesEliminar = document.querySelectorAll(".carrito-producto-eliminar");
     botonesEliminar.forEach(boton => {
         boton.addEventListener("click", eliminarDelCarrito);
-    })
-};
+    });
+}
 
 function eliminarDelCarrito(e) {
     const idBoton = e.currentTarget.id;
@@ -333,45 +304,6 @@ function eliminarDelCarrito(e) {
     actualizarCarritoProductos();
 }
 
-
-function actualizarCarritoProductos() {
-    carritoProductos.innerHTML = "";
-
-    productosEnCarrito.forEach(producto => {
-        const div = document.createElement("div");
-        div.classList.add("carrito-producto");
-        div.innerHTML = `
-            <img class="carrito-producto-imagen" src="${producto.imagen}" alt="${producto.titulo}">
-            <div class="carrito-producto-nombre">
-                <small>Nombre</small>
-                <h3>${producto.titulo}</h3>
-            </div>
-            <div class="carrito-producto-cantidad">
-                <small>Cantidad</small>
-                <p>${producto.cantidad}</p>
-            </div>
-            <div class="carrito-producto-precio">
-                <small>Precio</small>
-                <p>$${producto.precio}</p>
-            </div>
-            <div class="carrito-producto-subtotal">
-                <small>Subtotal</small>
-                <p>$${producto.precio * producto.cantidad}</p>
-            </div>
-            <button class="carrito-producto-eliminar" id="eliminar-${producto.id}">
-                <i class="bi bi-trash-fill"></i>
-            </button>
-        `;
-        carritoProductos.append(div);
-    });
-
-    actualizarBotonesEliminar();
-    actualizarTotal();
-    actualizarCarritoNumero();
-    carritoVacio();
-}
-
-
 function actualizarTotal() {
     const totalCalculado = productosEnCarrito.reduce((acc, producto) => acc + (producto.precio * producto.cantidad), 0);
     contenedorTotal.textContent = "$" + totalCalculado;
@@ -385,13 +317,12 @@ function vaciarCarrito() {
     actualizarCarritoProductos();
 }
 
-
 const carritoNumero = document.querySelector("#carrito-numero");
+
 function actualizarCarritoNumero() {
     const numeroCalculado = productosEnCarrito.reduce((acc, producto) => acc + producto.cantidad, 0);
     carritoNumero.textContent = numeroCalculado;
 }
-
 
 function carritoVacio() {
     if (productosEnCarrito.length === 0) {
@@ -401,6 +332,7 @@ function carritoVacio() {
         carritoAcciones.classList.remove("disabled");
     }
 }
+
 function generarMensajeWhatsApp() {
     let mensaje = "¡Hola! Estos son los productos en mi carrito:\n\n";
 
@@ -423,6 +355,3 @@ function generarMensajeWhatsApp() {
     // Redirigir a la URL de WhatsApp
     window.location.href = urlWhatsApp;
 }
-
-carritoVacio();}
-
