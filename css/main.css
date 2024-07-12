@@ -310,10 +310,50 @@ main {
     font-family: 'Rubik', sans-serif; 
     font-style: italic;
     text-align: center;
-    color: #6d4294;
+    color: var(--clr-letras);
 
 }
+#form-cargar-producto button[type="submit"] {
+    background-color:var(--clr-letras) ;
+    color: #fff;
+    border: none;
+    padding: 5px 10px;
+    font-size: 10px;
+    border-radius: 4px;
+    cursor: pointer;
+}
 
+
+#form-cargar-producto input[type="text"],
+#form-cargar-producto input[type="number"],
+#form-cargar-producto select {
+    border-radius: 5px;
+    font-size: 16px;
+}
+#form-cargar-producto input[type="text"]:focus,
+#form-cargar-producto input[type="number"]:focus,
+#form-cargar-producto select:focus {
+    outline: none;
+    border-color: var(--clr-letras);
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+
+.Cargar-Productos {
+    font-size: 20px; 
+    font-weight: bold; 
+    color: var(--clr-recuadros); 
+    cursor: pointer; 
+}
+
+.Cargar-Productos:hover {
+    text-decoration: underline; 
+}
+
+#form-cargar-producto button[type="submit"]:hover {
+    background-color:var(--clr-fondo);}
+
+    
 .formulario-producto.active {
     display: block;
 }
