@@ -1,3 +1,22 @@
+// Función para guardar el carrito en cookies
+function guardarCarritoEnCookies() {
+    document.cookie = `productosEnCarrito=${JSON.stringify(productosEnCarrito)}; expires=Fri, 31 Dec 9999 23:59:59 GMT`;
+}
+
+// Función para cargar el carrito desde cookies al cargar la página
+function cargarCarritoDesdeCookies() {
+    const cookieValue = document.cookie.replace(/(?:(?:^|.*;\s*)productosEnCarrito\s*\=\s*([^;]*).*$)|^.*$/, "$1");
+    if (cookieValue) {
+        productosEnCarrito.push(...JSON.parse(cookieValue));
+        actualizarCarritoProductos();
+    }
+}
+// Al cargar la página, intentamos cargar el carrito desde las cookies
+document.addEventListener('DOMContentLoaded', () => {
+    cargarCarritoDesdeCookies();
+});
+
+
 const productos = [
     {
         id: "necessaires-01",
@@ -40,42 +59,42 @@ const productos = [
         precio: 6500
     },
     {
-        id: "chau-latas-01",
+        id: "chau latas-01",
         titulo: "Chau latas 01",
         imagen: "img/chau latas.jpg",
         categoria: {
             nombre: "Chau latas",
-            id: "chau-latas"
+            id: "chau latas"
         },
         precio: 9500
     },
     {
-        id: "chau-latas-02",
+        id: "chau latas-02",
         titulo: "Chau latas 02",
         imagen: "img/chau latas (2).jpg",
         categoria: {
             nombre: "Chau latas",
-            id: "chau-latas"
+            id: "chau latas"
         },
         precio: 9500
     },
     {
-        id: "chau-latas-03",
+        id: "chau latas-03",
         titulo: "Chau latas 03",
         imagen: "img/chau latas (3).jpg",
         categoria: {
             nombre: "Chau latas",
-            id: "chau-latas"
+            id: "chau latas"
         },
         precio: 9500
     },
     {
-        id: "chau-latas-04",
+        id: "chau latas-04",
         titulo: "Chau latas 04",
         imagen: "img/chau latas (4).jpg",
         categoria: {
             nombre: "Chau latas",
-            id: "chau-latas"
+            id: "chau latas"
         },
         precio: 9500
     },
@@ -222,6 +241,7 @@ function agregarAlCarrito(e) {
 
     const mensaje = `¡Se agregó "${productoElegido.titulo}" al carrito!`;
     mostrarMensaje(mensaje);
+    guardarCarritoEnCookies();
 }
 
 function mostrarMensaje(mensaje) {
@@ -297,6 +317,7 @@ function eliminarUnaUnidadDelCarrito(e) {
     const productoEliminado = productos.find(producto => producto.id === productoId);
     const mensaje = `¡Se eliminó una unidad de "${productoEliminado.titulo}" del carrito!`;
     mostrarMensaje(mensaje);
+    guardarCarritoEnCookies();
 }
 
 function actualizarTotal() {
@@ -324,9 +345,10 @@ const vaciarCarrito = document.querySelector("#vaciar-carrito");
 vaciarCarrito.addEventListener("click", () => {
     productosEnCarrito.length = 0;
     actualizarCarritoProductos();
-
+    guardarCarritoEnCookies();
     const mensaje = `¡Se vació el carrito!`;
     mostrarMensaje(mensaje);
+    
 });
 
 const generarMensajeWhatsApp = () => {
