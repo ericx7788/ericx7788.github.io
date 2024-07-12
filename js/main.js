@@ -141,6 +141,7 @@ const productos = [
     }
 ];
 
+const claveCorrecta = "eric"; // Reemplaza con tu clave correcta
 const contenedorProductos = document.querySelector("#contenedor-productos");
 const contenedorCarrito = document.querySelector("#contenedor-carrito");
 
@@ -329,29 +330,37 @@ vaciarCarrito.addEventListener("click", () => {
 });
 
 const generarMensajeWhatsApp = () => {
-    const mensaje = `Hola, estoy interesado en los siguientes productos: \n`;
+    const mensaje = `Hola, estoy interesado en los siguientes productos: /n`;
 
     productosEnCarrito.forEach(producto => {
-        mensaje += `${producto.titulo} - Cantidad: ${producto.cantidad} - Precio: $${producto.precio * producto.cantidad} \n`;
+        mensaje += `${producto.titulo} - Cantidad: ${producto.cantidad} - Precio: $${producto.precio * producto.cantidad} /n`;
     });
 
-    mensaje += `\nTotal: $${contenedorTotal.textContent}`;
+    mensaje += `/nTotal: $${contenedorTotal.textContent}`;
     const encodedMensaje = encodeURIComponent(mensaje);
-    const whatsappURL = `https://wa.me/5491122334455?text=${encodedMensaje}`;
+    
+    const numeroTelefono = "5492915116875"; // Reemplaza con tu número de teléfono sin el signo +
 
+    const whatsappURL = `https://wa.me/${numeroTelefono}?text=${encodedMensaje}`;
+
+    // Intenta abrir el enlace en una nueva pestaña
     window.open(whatsappURL, "_blank");
 };
+
+
+  
+
 
 const abrirFormulario = document.getElementById('abrir-formulario');
 const formularioProducto = document.getElementById('formulario-producto');
 
 abrirFormulario.addEventListener('click', () => {
-    formularioProducto.classList.add('active');
-});
+    const claveIngresada = prompt("Ingresa la clave para abrir el formulario:");
 
-window.addEventListener('click', (e) => {
-    if (!formularioProducto.contains(e.target) && e.target !== abrirFormulario) {
-        formularioProducto.classList.remove('active');
+    if (claveIngresada === claveCorrecta) {
+        formularioProducto.classList.add('active');
+    } else {
+        alert("Clave incorrecta. No puedes acceder al formulario.");
     }
 });
 
