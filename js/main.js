@@ -40,47 +40,47 @@ const productos = [
         precio: 6500
     },
     {
-        id: "chau latas-01",
+        id: "chau-latas-01",
         titulo: "Chau latas 01",
         imagen: "img/chau latas.jpg",
         categoria: {
             nombre: "Chau latas",
-            id: "chau latas"
+            id: "chau-latas"
         },
         precio: 9500
     },
     {
-        id: "chau latas-02",
+        id: "chau-latas-02",
         titulo: "Chau latas 02",
         imagen: "img/chau latas (2).jpg",
         categoria: {
             nombre: "Chau latas",
-            id: "chau latas"
+            id: "chau-latas"
         },
         precio: 9500
     },
     {
-        id: "chau latas-03",
+        id: "chau-latas-03",
         titulo: "Chau latas 03",
         imagen: "img/chau latas (3).jpg",
         categoria: {
             nombre: "Chau latas",
-            id: "chau latas"
+            id: "chau-latas"
         },
         precio: 9500
     },
     {
-        id: "chau latas-04",
+        id: "chau-latas-04",
         titulo: "Chau latas 04",
         imagen: "img/chau latas (4).jpg",
         categoria: {
             nombre: "Chau latas",
-            id: "chau latas"
+            id: "chau-latas"
         },
         precio: 9500
     },
     {
-        id: "porta anteojos-01",
+        id: "porta-anteojos-01",
         titulo: "Porta anteojos 01",
         imagen: "img/Porta anteojos.jpg",
         categoria: {
@@ -90,7 +90,7 @@ const productos = [
         precio: 4700
     },
     {
-        id: "porta anteojos-02",
+        id: "porta-anteojos-02",
         titulo: "Porta anteojos 02",
         imagen: "img/Porta anteojos (2).jpg",
         categoria: {
@@ -101,7 +101,7 @@ const productos = [
     },
     {
         id: "materos",
-        titulo: "Materos ",
+        titulo: "Materos",
         imagen: "img/Materos.jpg",
         categoria: {
             nombre: "Otros",
@@ -110,7 +110,7 @@ const productos = [
         precio: 40000
     },
     {
-        id: "matera de lona",
+        id: "matera-de-lona",
         titulo: "Matera de lona",
         imagen: "img/Matera de lona.jpg",
         categoria: {
@@ -120,7 +120,7 @@ const productos = [
         precio: 22000
     },
     {
-        id: "porta mate de auto",
+        id: "porta-mate-de-auto",
         titulo: "Porta mate de auto",
         imagen: "img/Porta mate de auto.jpg",
         categoria: {
@@ -354,9 +354,6 @@ const generarMensajeWhatsApp = () => {
     window.open(whatsappURL, "_blank");
 };
 
-  
-
-
 const abrirFormulario = document.getElementById('abrir-formulario');
 const formularioProducto = document.getElementById('formulario-producto');
 
@@ -368,6 +365,11 @@ abrirFormulario.addEventListener('click', () => {
     } else {
         alert("Clave incorrecta. No puedes acceder al formulario.");
     }
+});
+
+const cerrarFormulario = document.getElementById('cerrar-formulario');
+cerrarFormulario.addEventListener('click', () => {
+    formularioProducto.classList.remove('active');
 });
 
 const formCargarProducto = document.getElementById('form-cargar-producto');
