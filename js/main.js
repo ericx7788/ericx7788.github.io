@@ -330,23 +330,29 @@ vaciarCarrito.addEventListener("click", () => {
 });
 
 const generarMensajeWhatsApp = () => {
-    const mensaje = `Hola, estoy interesado en los siguientes productos: /n`;
+    // Construir el mensaje inicial
+    let mensaje = `Hola, estoy interesado en los siguientes productos: \n\n`;
 
-    productosEnCarrito.forEach(producto => {
-        mensaje += `${producto.titulo} - Cantidad: ${producto.cantidad} - Precio: $${producto.precio * producto.cantidad} /n`;
+    // Recorrer los productos en el carrito y agregarlos al mensaje
+    productosEnCarrito.forEach((producto, index) => {
+        mensaje += `${index + 1}. ${producto.titulo} - Cantidad: ${producto.cantidad} - Precio unitario: $${producto.precio.toFixed(2)} - Subtotal: $${(producto.precio * producto.cantidad).toFixed(2)}\n`;
     });
 
-    mensaje += `/nTotal: $${contenedorTotal.textContent}`;
-    const encodedMensaje = encodeURIComponent(mensaje);
-    
-    const numeroTelefono = "5492915116875"; // Reemplaza con tu número de teléfono sin el signo +
+    // Agregar el total del carrito al mensaje
+    mensaje += `\nTotal: $${contenedorTotal.textContent}`;
 
+    // Codificar el mensaje para que sea parte de la URL
+    const encodedMensaje = encodeURIComponent(mensaje);
+
+    // Número de teléfono al que se enviará el mensaje (sin el signo +)
+    const numeroTelefono = "5492915116875"; // Reemplaza con tu número de teléfono
+
+    // Construir la URL de WhatsApp
     const whatsappURL = `https://wa.me/${numeroTelefono}?text=${encodedMensaje}`;
 
-    // Intenta abrir el enlace en una nueva pestaña
+    // Abrir la URL en una nueva pestaña
     window.open(whatsappURL, "_blank");
 };
-
 
   
 
