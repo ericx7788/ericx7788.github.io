@@ -1,9 +1,45 @@
-// Función para guardar el carrito en cookies
+
+function guardarFormularioEnCookies() {
+    const formularioData = {
+        titulo: formCargarProducto.titulo.value,
+        imagen: formCargarProducto.imagen.value,
+        categoria: formCargarProducto.categoria.value,
+        precio: parseFloat(formCargarProducto.precio.value),
+        id: formCargarProducto.titulo.value.toLowerCase().replace(/\s+/g, '-')
+    };
+
+    document.cookie = `formularioProducto=${JSON.stringify(formularioData)}; expires=Fri, 31 Dec 9999 23:59:59 GMT`;
+}
+
+// Función para cargar los datos del formulario desde cookies al cargar la página
+function cargarFormularioDesdeCookies() {
+    const cookieValue = document.cookie.replace(/(?:(?:^|.*;\s*)formularioProducto\s*\=\s*([^;]*).*$)|^.*$/, "$1");
+    if (cookieValue) {
+        const formularioData = JSON.parse(cookieValue);
+
+        
+        formCargarProducto.titulo.value = formularioData.titulo;
+        formCargarProducto.imagen.value = formularioData.imagen;
+        formCargarProducto.categoria.value = formularioData.categoria;
+        formCargarProducto.precio.value = formularioData.precio;
+
+        
+        
+    }
+}
+document.addEventListener('DOMContentLoaded', () => {
+    cargarFormularioDesdeCookies();
+});
+//codigo de prueba fin
+
+
+
+
 function guardarCarritoEnCookies() {
     document.cookie = `productosEnCarrito=${JSON.stringify(productosEnCarrito)}; expires=Fri, 31 Dec 9999 23:59:59 GMT`;
 }
 
-// Función para cargar el carrito desde cookies al cargar la página
+
 function cargarCarritoDesdeCookies() {
     const cookieValue = document.cookie.replace(/(?:(?:^|.*;\s*)productosEnCarrito\s*\=\s*([^;]*).*$)|^.*$/, "$1");
     if (cookieValue) {
@@ -11,7 +47,7 @@ function cargarCarritoDesdeCookies() {
         actualizarCarritoProductos();
     }
 }
-// Al cargar la página, intentamos cargar el carrito desde las cookies
+
 document.addEventListener('DOMContentLoaded', () => {
     cargarCarritoDesdeCookies();
 });
@@ -160,7 +196,7 @@ const productos = [
     }
 ];
 
-const claveCorrecta = "eric"; // Reemplaza con tu clave correcta
+const claveCorrecta = "gaia"; 
 const contenedorProductos = document.querySelector("#contenedor-productos");
 const contenedorCarrito = document.querySelector("#contenedor-carrito");
 
@@ -411,4 +447,5 @@ formCargarProducto.addEventListener('submit', (e) => {
     actualizarContenedorProductos(productos);
     formCargarProducto.reset();
     formularioProducto.classList.remove('active');
+    guardarFormularioEnCookies();
 });
