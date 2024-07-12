@@ -120,16 +120,6 @@ const productos = [
         precio: 22000
     },
     {
-        id: "mochila puffer",
-        titulo: "Mochila puffer ",
-        imagen: "img/Mochila puffer.jpg",
-        categoria: {
-            nombre: "Otros",
-            id: "otros"
-        },
-        precio: 29700
-    },
-    {
         id: "porta mate de auto",
         titulo: "Porta mate de auto",
         imagen: "img/Porta mate de auto.jpg",
@@ -287,71 +277,99 @@ function actualizarCarritoProductos() {
 function actualizarBotonesEliminar() {
     const botonesEliminar = document.querySelectorAll(".carrito-producto-eliminar");
     botonesEliminar.forEach(boton => {
-        boton.addEventListener("click", eliminarDelCarrito);
+        boton.addEventListener("click", eliminarUnaUnidadDelCarrito);
     });
 }
 
-function eliminarDelCarrito(e) {
-    const idBoton = e.currentTarget.id;
-    const index = productosEnCarrito.findIndex(producto => "eliminar-" + producto.id === idBoton);
+function eliminarUnaUnidadDelCarrito(e) {
+    const productoId = e.currentTarget.id.replace("eliminar-", "");
+    const productoIndex = productosEnCarrito.findIndex(producto => producto.id === productoId);
 
-    if (productosEnCarrito[index].cantidad > 1) {
-        productosEnCarrito[index].cantidad--;
+    if (productosEnCarrito[productoIndex].cantidad > 1) {
+        productosEnCarrito[productoIndex].cantidad--;
     } else {
-        productosEnCarrito.splice(index, 1);
+        productosEnCarrito.splice(productoIndex, 1);
     }
 
     actualizarCarritoProductos();
+
+    const productoEliminado = productos.find(producto => producto.id === productoId);
+    const mensaje = `¡Se eliminó una unidad de "${productoEliminado.titulo}" del carrito!`;
+    mostrarMensaje(mensaje);
 }
 
 function actualizarTotal() {
-    const totalCalculado = productosEnCarrito.reduce((acc, producto) => acc + (producto.precio * producto.cantidad), 0);
-    contenedorTotal.textContent = "$" + totalCalculado;
+    const total = productosEnCarrito.reduce((accumulator, producto) => {
+        return accumulator + (producto.precio * producto.cantidad);
+    }, 0);
+
+    contenedorTotal.textContent = `$${total}`;
 }
-
-const botonVaciarCarrito = document.querySelector("#vaciar-carrito");
-botonVaciarCarrito.addEventListener("click", vaciarCarrito);
-
-function vaciarCarrito() {
-    productosEnCarrito.length = 0;
-    actualizarCarritoProductos();
-}
-
-const carritoNumero = document.querySelector("#carrito-numero");
 
 function actualizarCarritoNumero() {
-    const numeroCalculado = productosEnCarrito.reduce((acc, producto) => acc + producto.cantidad, 0);
-    carritoNumero.textContent = numeroCalculado;
+    const carritoNumero = document.querySelector("#carrito-numero");
+    carritoNumero.textContent = productosEnCarrito.length;
 }
 
 function carritoVacio() {
     if (productosEnCarrito.length === 0) {
         carritoAcciones.classList.add("disabled");
-        carritoProductos.innerHTML = "<p class='carrito-vacio'>Tu carrito está vacío. <i class='bi bi-emoji-frown'></i></p>";
     } else {
         carritoAcciones.classList.remove("disabled");
     }
 }
 
-function generarMensajeWhatsApp() {
-    let mensaje = "¡Hola! Estos son los productos en mi carrito:\n\n";
+const vaciarCarrito = document.querySelector("#vaciar-carrito");
+vaciarCarrito.addEventListener("click", () => {
+    productosEnCarrito.length = 0;
+    actualizarCarritoProductos();
 
-    productosEnCarrito.forEach((producto, index) => {
-        mensaje += `${index + 1}. ${producto.titulo} - Cantidad: ${producto.cantidad}\n`;
-        mensaje += `Precio unitario: $${producto.precio}\n`;
-        // Puedes incluir más detalles como subtotal por producto si lo deseas
-        mensaje += "\n";
+    const mensaje = `¡Se vació el carrito!`;
+    mostrarMensaje(mensaje);
+});
+
+const generarMensajeWhatsApp = () => {
+    const mensaje = `Hola, estoy interesado en los siguientes productos: \n`;
+
+    productosEnCarrito.forEach(producto => {
+        mensaje += `${producto.titulo} - Cantidad: ${producto.cantidad} - Precio: $${producto.precio * producto.cantidad} \n`;
     });
 
-    // Codificar el mensaje para URL
-    mensaje = encodeURIComponent(mensaje);
+    mensaje += `\nTotal: $${contenedorTotal.textContent}`;
+    const encodedMensaje = encodeURIComponent(mensaje);
+    const whatsappURL = `https://wa.me/5491122334455?text=${encodedMensaje}`;
 
-    // Número de teléfono de WhatsApp (reemplaza con tu número)
-    const numeroWhatsApp = "2915116875"; // Cambia por tu número de WhatsApp
+    window.open(whatsappURL, "_blank");
+};
 
-    // Construir la URL de WhatsApp
-    const urlWhatsApp = `https://wa.me/${numeroWhatsApp}?text=${mensaje}`;
+const abrirFormulario = document.getElementById('abrir-formulario');
+const formularioProducto = document.getElementById('formulario-producto');
 
-    // Redirigir a la URL de WhatsApp
-    window.location.href = urlWhatsApp;
-}
+abrirFormulario.addEventListener('click', () => {
+    formularioProducto.classList.add('active');
+});
+
+window.addEventListener('click', (e) => {
+    if (!formularioProducto.contains(e.target) && e.target !== abrirFormulario) {
+        formularioProducto.classList.remove('active');
+    }
+});
+
+const formCargarProducto = document.getElementById('form-cargar-producto');
+formCargarProducto.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const nuevoProducto = {
+        titulo: formCargarProducto.titulo.value,
+        imagen: formCargarProducto.imagen.value,
+        categoria: {
+            nombre: formCargarProducto.categoria.value,
+            id: formCargarProducto.categoria.value.toLowerCase().replace(/\s+/g, '-')
+        },
+        precio: parseFloat(formCargarProducto.precio.value),
+        id: formCargarProducto.titulo.value.toLowerCase().replace(/\s+/g, '-')
+    };
+    productos.push(nuevoProducto);
+    actualizarContenedorProductos(productos);
+    formCargarProducto.reset();
+    formularioProducto.classList.remove('active');
+});
