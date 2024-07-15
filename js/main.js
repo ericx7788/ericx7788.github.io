@@ -265,12 +265,17 @@ function actualizarBotonesAgregar() {
 function agregarAlCarrito(e) {
     const productoElegido = productos.find(producto => "agregar-" + producto.id === e.currentTarget.id);
 
-    if (productosEnCarrito.find(producto => producto.id === productoElegido.id)) {
-        const productoIndex = productosEnCarrito.findIndex(producto => producto.id === productoElegido.id);
-        productosEnCarrito[productoIndex].cantidad++;
+    const productoEnCarrito = productosEnCarrito.find(producto => producto.id === productoElegido.id);
+
+    if (productoEnCarrito) {
+        
+        productoEnCarrito.cantidad++;
     } else {
-        productoElegido.cantidad = 1;
-        productosEnCarrito.push(productoElegido);
+        
+        productosEnCarrito.push({
+            ...productoElegido,
+            cantidad: 1
+        });
     }
 
     actualizarCarritoProductos();
@@ -366,7 +371,13 @@ function actualizarTotal() {
 
 function actualizarCarritoNumero() {
     const carritoNumero = document.querySelector("#carrito-numero");
-    carritoNumero.textContent = productosEnCarrito.length;
+    let totalProductos = 0;
+
+    productosEnCarrito.forEach(producto => {
+        totalProductos += producto.cantidad;
+    });
+
+    carritoNumero.textContent = totalProductos;
 }
 
 function carritoVacio() {
