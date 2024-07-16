@@ -487,19 +487,34 @@ cerrarFormulario.addEventListener('click', () => {
 const formCargarProducto = document.getElementById('form-cargar-producto');
 formCargarProducto.addEventListener('submit', (e) => {
     e.preventDefault();
+
+    const titulo = formCargarProducto.titulo.value.trim();
+    const imagen = formCargarProducto.imagen.value.trim();
+    const categoriaNombre = formCargarProducto.categoria.value.trim();
+    const precio = parseFloat(formCargarProducto.precio.value);
+
+    // Validar que el título no esté vacío
+    if (titulo === '') {
+        alert('Por favor, ingresa un título válido para el producto.');
+        return;
+    }
+
     const nuevoProducto = {
-        titulo: formCargarProducto.titulo.value,
-        imagen: formCargarProducto.imagen.value,
+        titulo: titulo,
+        imagen: imagen,
         categoria: {
-            nombre: formCargarProducto.categoria.value,
-            id: formCargarProducto.categoria.value.toLowerCase().replace(/\s+/g, '-')
+            nombre: categoriaNombre,
+            id: categoriaNombre.toLowerCase().replace(/\s+/g, '-')
         },
-        precio: parseFloat(formCargarProducto.precio.value),
-        id: formCargarProducto.titulo.value.toLowerCase().replace(/\s+/g, '-')
+        precio: precio,
+        id: titulo.toLowerCase().replace(/\s+/g, '-')
     };
+
     productos.push(nuevoProducto);
+
+    guardarProductosEnCookies();
     actualizarContenedorProductos(productos);
+
     formCargarProducto.reset();
     formularioProducto.classList.remove('active');
-    guardarFormularioEnCookies();
 });
