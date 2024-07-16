@@ -313,26 +313,17 @@ main {
     color: var(--clr-letras);
 
 }
-#form-cargar-producto button[type="submit"] {
-    background-color:var(--clr-letras) ;
-    color: #fff;
-    border: none;
-    padding: 5px 10px;
-    font-size: 10px;
-    border-radius: 4px;
-    cursor: pointer;
-}
 
 
-#form-cargar-producto input[type="text"],
-#form-cargar-producto input[type="number"],
-#form-cargar-producto select {
+#eliminar-producto, #form-cargar-producto input[type="text"],
+#eliminar-producto, #form-cargar-producto input[type="number"],
+#eliminar-producto, #form-cargar-producto select {
     border-radius: 5px;
     font-size: 16px;
 }
-#form-cargar-producto input[type="text"]:focus,
-#form-cargar-producto input[type="number"]:focus,
-#form-cargar-producto select:focus {
+#eliminar-producto, #form-cargar-producto input[type="text"]:focus,
+#eliminar-producto, #form-cargar-producto input[type="number"]:focus,
+#eliminar-producto, #form-cargar-producto select:focus {
     outline: none;
     border-color: var(--clr-letras);
     box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
@@ -350,9 +341,6 @@ main {
     text-decoration: underline; 
 }
 
-#form-cargar-producto button[type="submit"]:hover {
-    background-color:var(--clr-fondo);}
-
     
 .formulario-producto.active {
     display: block;
@@ -367,4 +355,25 @@ main {
     color: #000;
     cursor: pointer;
 }
+#eliminar-producto,
+#form-cargar-producto button[type="submit"] {
+    background-color: var(--clr-letras);
+    color: #fff;
+    border: none;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+    font-size: 0.55rem; /* Ajustar tamaño de fuente si es necesario */
+}
 
+/* Estilo de hover común para ambos botones */
+#eliminar-producto:hover,
+#form-cargar-producto button[type="submit"]:hover {
+    background-color: var(--clr-fondo);
+}
+
+
+#eliminar-producto:hover, #form-cargar-producto button[type="submit"]:hover {
+    background-color: var(--clr-fondo);
+}
