@@ -1,57 +1,100 @@
 
+document.addEventListener('DOMContentLoaded', () => {
+    cargarProductosDesdeCookies(); 
+    cargarCarritoDesdeCookies(); 
+    actualizarContenedorProductos(productos); 
+});
+
 function guardarFormularioEnCookies() {
-    const formularioData = {
+    const nuevoProducto = {
         titulo: formCargarProducto.titulo.value,
         imagen: formCargarProducto.imagen.value,
-        categoria: formCargarProducto.categoria.value,
+        categoria: {
+            nombre: formCargarProducto.categoria.value,
+            id: formCargarProducto.categoria.value.toLowerCase().replace(/\s+/g, '-')
+        },
         precio: parseFloat(formCargarProducto.precio.value),
         id: formCargarProducto.titulo.value.toLowerCase().replace(/\s+/g, '-')
     };
 
-    document.cookie = `formularioProducto=${JSON.stringify(formularioData)}; expires=Fri, 31 Dec 9999 23:59:59 GMT`;
+   
+    productos.push(nuevoProducto);
+
+   
+    guardarProductosEnCookies();
+
+    
+    actualizarContenedorProductos(productos);
+
+    
+    formCargarProducto.reset();
+    formularioProducto.classList.remove('active');
 }
 
-// Función para cargar los datos del formulario desde cookies al cargar la página
-function cargarFormularioDesdeCookies() {
-    const cookieValue = document.cookie.replace(/(?:(?:^|.*;\s*)formularioProducto\s*\=\s*([^;]*).*$)|^.*$/, "$1");
-    if (cookieValue) {
-        const formularioData = JSON.parse(cookieValue);
+function eliminarProductoDesdeFormulario() {
+    const tituloEliminar = formCargarProducto.titulo.value;
+    const index = productos.findIndex(producto => producto.titulo === tituloEliminar);
 
-        
-        formCargarProducto.titulo.value = formularioData.titulo;
-        formCargarProducto.imagen.value = formularioData.imagen;
-        formCargarProducto.categoria.value = formularioData.categoria;
-        formCargarProducto.precio.value = formularioData.precio;
-
-        
-        
+    if (index !== -1) {
+        productos.splice(index, 1);
+        actualizarContenedorProductos(productos); 
+        guardarProductosEnCookies(); s
+        alert(`Se eliminó el producto "${tituloEliminar}" correctamente.`);
+    } else {
+        alert(`No se encontró ningún producto con el título "${tituloEliminar}".`);
     }
 }
-document.addEventListener('DOMContentLoaded', () => {
-    cargarFormularioDesdeCookies();
-});
+
+
+function guardarProductosEnCookies() {
+    document.cookie = `productos=${JSON.stringify(productos)}; expires=Fri, 31 Dec 9999 23:59:59 GMT`;
+}
+
+
+function cargarProductosDesdeCookies() {
+    const cookieValue = document.cookie.replace(/(?:(?:^|.*;\s*)productos\s*\=\s*([^;]*).*$)|^.*$/, "$1");
+    if (cookieValue) {
+        productos.length = 0; 
+        productos.push(...JSON.parse(cookieValue)); 
+    }
+}
+
+
+const botonEliminarProducto = document.getElementById('eliminar-producto');
+botonEliminarProducto.addEventListener('click', eliminarProductoDesdeFormulario);
 //codigo de prueba fin
 
 
 
 
-function guardarCarritoEnCookies() {
-    document.cookie = `productosEnCarrito=${JSON.stringify(productosEnCarrito)}; expires=Fri, 31 Dec 9999 23:59:59 GMT`;
-}
-
-
 function cargarCarritoDesdeCookies() {
     const cookieValue = document.cookie.replace(/(?:(?:^|.*;\s*)productosEnCarrito\s*\=\s*([^;]*).*$)|^.*$/, "$1");
     if (cookieValue) {
-        productosEnCarrito.push(...JSON.parse(cookieValue));
-        actualizarCarritoProductos();
+        const productosEnCarritoDesdeCookies = JSON.parse(cookieValue);
+        
+       
+        productosEnCarrito.length = 0;
+
+        
+        productosEnCarritoDesdeCookies.forEach(producto => {
+            const productoExistente = productosEnCarrito.find(p => p.id === producto.id);
+            if (productoExistente) {
+                
+                productoExistente.cantidad += producto.cantidad;
+            } else {
+                
+                productosEnCarrito.push(producto);
+            }
+        });
+
+        actualizarCarritoProductos(); 
     }
 }
 
-document.addEventListener('DOMContentLoaded', () => {
-    cargarCarritoDesdeCookies();
-});
 
+function guardarCarritoEnCookies() {
+    document.cookie = `productosEnCarrito=${JSON.stringify(productosEnCarrito)}; expires=Fri, 31 Dec 9999 23:59:59 GMT`;
+}
 
 const productos = [
     {
